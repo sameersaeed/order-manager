@@ -1,22 +1,26 @@
-#orders{
+#orders, #adminorders{
     font-family: sans-serif;
     border-collapse: collapse;
     width: 95%;
 }
-#orders tr:nth-child(even){
+#orders tr:nth-child(even), #adminorders tr:nth-child(even){
     background-color: #e3effa;
 }
-#orders tr:hover, #order th:not(:first-child) hover{
+#orders tr:hover, #order th:not(:first-child) hover, 
+#adminorders tr:hover, #adminorder th:not(:first-child) hover{
     background-color: #c9c9c9;
 }
-#orders th{
+#orders th, #adminorders th{
     color: white;
     background-color: #0087ff;
     padding-top: 15px;
     padding-bottom: 15px;
 }
-#orders th, #orders td{
+#orders th, #adminorders th, #orders td, #adminorders td{
     text-align: center;
-    border-bottom: 2px solid black;
+    border-bottom: 2pxsolidblack;
     padding: 2px;
+}
+html, body{
+    background-color: lightsteelblue;
 }

@@ -64,6 +64,7 @@
         * - required
         <br>
         <?php           
+            //posting order data to db 
             if($_SERVER['REQUEST_METHOD'] == "POST"){
                 $user_id = $user_data['user_id'];
                 $order_id = random_num(20);
@@ -75,7 +76,7 @@
                 $order_status = $_POST['order_status'];
 
                 if(!empty($order_name) && !empty($order_status)){
-                    //inserts 
+                    //inserts order into db
                     $query = "INSERT INTO user_orders(user_id, order_id, order_name, order_price, 
                         order_quantity, order_date, order_type, order_status) 
                     VALUES('$user_id', '$order_id', '$order_name', '$order_price',  '$order_quantity', 
@@ -98,52 +99,117 @@
         $dbname = "inv_mgmt_db";
         $db = new mysqli($dbhost, $dbuser, $dbpass, $dbname); 
 
-        //administrator account, who has an ID of 0, can see all users' orders and non-sensitive info
-        if($user_data['user_id'] == 0){
-            admin_list();
+        $user_id = $user_data['user_id'];
+        
+        //checks for admin user, admins have id=0 and can see all users' orders
+        if($user_id == 0){
+            $query = "SELECT user_orders.*, users.user_id, users.user_name
+                        FROM user_orders
+                      JOIN users USING(user_id)";            
+        }
+        //not an admin user, query changed to not show all orders
+        else{
+            $query = "SELECT * FROM user_orders WHERE user_id IN (SELECT user_id FROM users WHERE user_id ='$user_id');";
         }
 
-        //user can only see their own orders, which are linked to their id
-        else{
-            $user_id = $user_data['user_id'];
-            $query = "SELECT * FROM user_orders WHERE user_id IN (SELECT user_id FROM users WHERE user_id ='$user_id');";
-
-            //creating table and table headers
-            echo '<div class="table-responsive">  
-                    <table id="orders">
+        //admin can view two more cols, for users name and id
+        if($user_id == 0){ 
+            echo '<div class="table-responsive">    
+                    <table id="adminorders">
                         <thead>
                             <tr>
-                                <th>Order ID</td> 
-                                <th>Name</td> 
-                                <th>Price</td> 
-                                <th>Quantity</td>
-                                <th>Date</td> 
-                                <th>Type</td>
-                                <th>Status</td> 
-                            </tr>
-                        </thead>';
-
-            //iterating thru table and getting all needed data 
-            $result = mysqli_query($db, $query);
-            while ($row = mysqli_fetch_assoc($result)) {
-                //plotting data to table
-                echo '<tr> 
-                        <td>'.$row['order_id'].'</td> 
-                        <td>'.$row['order_name'].'</td> 
-                        <td>'.$row['order_price'].'</td> 
-                        <td>'.$row['order_quantity'].'</td> 
-                        <td>'.$row['order_date'].'</td> 
-                        <td>'.$row['order_type'].'</td>
-                        <td>'.$row['order_status'].'</td> 
-                      </tr>';
-            }
-            //freeing memory
-            $result->free();
+                                <th>User Name</td> 
+                                <th>User ID</td>';
         }
+        else{ //user table
+            echo '<div class="table-responsive">    
+                    <table id="orders">
+                        <thead>
+                            <tr>';
+        }
+
+        //creating table and table headers
+        echo '  <th>Order ID</td> 
+                <th>Name</td> 
+                <th>Price</td> 
+                <th>Quantity</td>
+                <th>Date</td> 
+                <th>Type</td>
+                <th>Status</td> 
+              </tr>
+            </thead>';
+
+        //iterating thru table and getting all needed data 
+        $result = mysqli_query($db, $query);
+        while ($row = mysqli_fetch_assoc($result)) {
+            //plotting data to table
+            if($user_id == 0){ //plotting user name+id rows for admin view
+                echo '<tr>
+                        <td>'.$row['user_name'].'</td>
+                        <td>'.$row['user_id'].'</td>';
+            }
+            echo '<td>'.$row['order_id'].'</td> 
+                  <td>'.$row['order_name'].'</td> 
+                  <td>'.$row['order_price'].'</td> 
+                  <td>'.$row['order_quantity'].'</td> 
+                  <td>'.$row['order_date'].'</td> 
+                  <td>'.$row['order_type'].'</td>
+                  <td>'.$row['order_status'].'</td> 
+                </tr>';
+    }
+        //freeing memory
+        $result->free();
     ?>
     <script src="https://cdn.jsdelivr.net/npm/jquery-tabledit@1.0.0/jquery.tabledit.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>  
+    //admin table. admin can also edit/delete their/user's tables
+    $('#adminorders').Tabledit({
+        url: 'db_updater.php',
+        columns: {
+            identifier: [2, 'order_id'],
+            editable:[
+            [3, 'order_name'], [4, 'order_price'], [5, 'order_quantity'], [6, 'order_date'], [7, 'order_type', '{"Select type": "Select type", "Buying": "Buying", "Selling": "Selling", "Renting": "Renting", "Loaning": "Loaning", "Other": "Other"}'], [8, 'order_status', '{"Select status": "Select status", "In progress": "In progress", "Completed": "Completed", "Cancelled": "Cancelled"}']]
+        },
+        onDraw: function() {
+            $('#adminorders td:nth-child(7) input').each(function() {
+                $(this).datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    todayHighlight: true
+                });
+            });
+            console.log('onDraw()');
+        },
+        onSuccess: function(data, textStatus, jqXHR) {
+            if(data.action == 'delete'){
+                $('#' + data.id).remove();
+                $('#adminorders').DataTable().ajax.reload();
+            }
+            console.log('onSuccess(data, textStatus, jqXHR)');
+            console.log(data);
+            console.log(textStatus);
+            console.log(jqXHR);
+                location.reload();
+        },
+        onFail: function(jqXHR, textStatus, errorThrown) {
+            console.log('onFail(jqXHR, textStatus, errorThrown)');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+                location.reload();
+
+        },
+        onAlways: function() {
+            console.log('onAlways()');
+        },
+        onAjax: function(action, serialize) {
+            console.log('onAjax(action, serialize)');
+            console.log(action);
+            console.log(serialize);
+        }
+    });
+
+    //user table
     $('#orders').Tabledit({
         url: 'db_updater.php',
         columns: {
