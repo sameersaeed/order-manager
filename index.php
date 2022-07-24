@@ -10,35 +10,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="index_styles.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $user_data['user_name']; ?>'s home page</title>
 </head>
-<style type="text/css">
-#orders{
-    font-family: sans-serif;
-    border-collapse: collapse;
-    width: 95%;
-}
-#orders tr:nth-child(even){
-    background-color: #e3effa;
-}
-#orders tr:hover, #order th:not(:first-child) hover{
-    background-color: #c9c9c9;
-}
-#orders th{
-    color: white;
-    background-color: #0087ff;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-#orders th, #orders td{
-    text-align: center;
-    border-bottom: 2px solid black;
-    padding: 2px;
-}
-</style>
-
 <body>
     <a href="logout.php">Logout</a>
     <h1>This is the index page</h1>
@@ -165,7 +142,6 @@
         }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/jquery-tabledit@1.0.0/jquery.tabledit.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>  
     $('#orders').Tabledit({

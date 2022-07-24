@@ -1,49 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="access_page_styles.css">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Welcome - log in or sign up</title>
 </head>
 <body>
-	<style type="text/css">
-		#text{
-			font-family: monospace;
-			height: 25px;
-			border-radius: 5px;
-			border: solid thin #aaa;
-			width: 100%;
-			padding: 5px;
-		}
-		#button{
-			border-radius: 15px;
-			width: 50%; 
-			margin-left: 25%;	
-			padding: 10px;
-			color: white;
-			background-color: dimgray;
-			border: none;
-		}
-		#inner-box{
-			width: 10vw;
-		    margin: auto;
-			padding: 20px;
-		    position: relative;
-			background-color: whitesmoke;
-		}
-		#header{
-			font-family: monospace;
-			padding-bottom: 15px;
-			font-size: 20px; 
-			text-align: center; 
-			color: black;
-			font-weight: bold;
-		}
-		p{
-			font-family: sans-serif;
-			font-size:105%
-		}
-	</style>
 	<div id="inner-box">
 		<form method="post">
 			<div id="header">Login</div>
