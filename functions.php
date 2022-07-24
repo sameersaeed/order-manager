@@ -1,5 +1,5 @@
 <?php
-	function check_id_login($con){
+	function check_id_user($con){
 		//check if session exists
 		if(isset($_SESSION['user_id'])){ 
 			//get user id

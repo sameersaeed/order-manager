@@ -3,7 +3,8 @@
     include("connection.php");
     include("functions.php");
 
-    $user_data = check_id_login($con);
+    //gets data of user and order using id
+    $user_data = check_id_user($con);
     $order_data = check_id_order($con);
 ?>
 
@@ -17,79 +18,96 @@
     <title><?php echo $user_data['user_name']; ?>'s home page</title>
 </head>
 <body>
-    <a href="logout.php">Logout</a>
-    <h1>This is the index page</h1>
+    <div class="nav">
+        <a href="logout.php">Logout</a>
+    </div>
     <br>
     <p1>Hello, <?php echo $user_data['user_name']; ?>.</p1>
     <br><br><br><br><br>
-    <div id="create">
-        <form method="post">
-            <p>Create a new transaction</p>
-            <br><br>
-            <p>Name*</p>  
-            <input id="text" type="text" name="order_name" placeholder="Enter name"><br><br>
-            
-            <p>Price</p>   
-            <input id="text" type="text" name="order_price" placeholder="Enter price ($CAD)"><br><br>
-            
-            <p>Quantity</p>   
-            <input id="text" type="text" name="order_quantity" placeholder="Enter quantity"><br><br>
+    <form method="post">
+        <div class="box-body">
+            <p>Create new transaction</p>
+            <div class="form-group row" >
+                <input name="order_id" type="hidden" id="id" value="1">
+                    <label class="text-right col-sm-4 col-form-label">Enter Name</label>
+                        <div class="col-sm-8"> 
+                            <input name="order_name" type="text" id="name"  class="form-control">
+                        </div>
+            </div>
+            <div class="form-group row">
+                <label class="text-right col-sm-4 col-form-label">Enter Price</label>
+                <div class="col-sm-8">
+                    <input name="order_price" type="text" id="price" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="text-right col-sm-4 col-form-label">Enter Quantity</label>
+                <div class="col-sm-8"> 
+                    <input name="order_quantity" type="text" id="quantity" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="text-right col-sm-4 col-form-label">Enter Date</label>
+                <div class="col-sm-8"> 
+                    <input name="order_date" type="date" id="date" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="text-right col-sm-4 col-form-label">Enter Type</label>
+                <div class="col-sm-8">
+                    <select class="form-control select1" name="order_type" id="type" data-width="100%">
+                        <option>Select type</option>
+                        <option value="Buying">Buying</option>
+                        <option value="Selling">Selling</option>
+                        <option value="Renting">Renting</option>
+                        <option value="Loaning">Loaning</option>
+                        <option value="Other">Other</option>
 
-            <p>Date</p>   
-            <input id="text" type="date" name="order_date" placeholder="Enter date"><br><br>
-            
-            <label style="font-weight: normal;" for="order_status">
-            <p>Status*</p>
-            </label>
-            <select id="type" name="order_status">
-                <option>Select status</option>
-                <option value="In progress">In progress</option>
-                <option value="Completed">Completed</option>
-                <option value="Cancelled">Cancelled</option>
-            </select><br><br>
-            
-            <label style="font-weight: normal;" for="order_type">
-            <p>Type</p>
-            </label>
-            <select id="type" name="order_type">
-                <option>Select type</option>
-                <option value="Buying">Buying</option>
-                <option value="Selling">Selling</option>
-                <option value="Renting">Renting</option>
-                <option value="Loaning">Loaning</option>
-                <option value="Other">Other</option>
-            </select><br><br>
-            <input id="button" type="submit" value="Create new order"><br><br>
-
-            * - required
-            <br>
-            <?php           
-                //posting order data to db 
-                if($_SERVER['REQUEST_METHOD'] == "POST"){
-                    $user_id = $user_data['user_id'];
-                    $order_id = random_num(20);
-                    $order_name = $_POST['order_name'];
-                    $order_price = $_POST['order_price'];
-                    $order_quantity = $_POST['order_quantity'];
-                    $order_date = $_POST['order_date'];
-                    $order_type = $_POST['order_type'];
-                    $order_status = $_POST['order_status'];
-
-                    if(!empty($order_name) && !empty($order_status)){
-                        //inserts order into db
-                        $query = "INSERT INTO user_orders(user_id, order_id, order_name, order_price, 
-                            order_quantity, order_date, order_type, order_status) 
-                        VALUES('$user_id', '$order_id', '$order_name', '$order_price',  '$order_quantity', 
-                            '$order_date', '$order_type', '$order_status')";
-                        mysqli_query($con, $query);
-                        //exits to prevent unintended inserts
-                        header("Location: index.php");
-                        exit;
-                    }
-                }
-            ?>
-        </form>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="text-right col-sm-4 col-form-label">Enter Status</label>
+                <div class="col-sm-8">
+                    <select class="form-control select2" name="order_status" id="status" data-width="100%">
+                        <option>Select status</option>
+                        <option value="In progress">In progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <b style="color: white;">* - required</b>
+            <button type="submit" name="update" class="btn btn-primary  pull-right">Create new order</button>
+        </div>
     </div>
+    <br>
+    <?php           
+        //posting order data to db 
+        if($_SERVER['REQUEST_METHOD'] == "POST"){
+            $user_id = $user_data['user_id'];
+            $order_id = random_num(20);
+            $order_name = $_POST['order_name'];
+            $order_price = $_POST['order_price'];
+            $order_quantity = $_POST['order_quantity'];
+            $order_date = $_POST['order_date'];
+            $order_type = $_POST['order_type'];
+            $order_status = $_POST['order_status'];
+
+            if(!empty($order_name) && !empty($order_status)){
+                //inserts order into db
+                $query = "INSERT INTO user_orders(user_id, order_id, order_name, order_price, 
+                    order_quantity, order_date, order_type, order_status) 
+                VALUES('$user_id', '$order_id', '$order_name', '$order_price',  '$order_quantity', 
+                    '$order_date', '$order_type', '$order_status')";
+                mysqli_query($con, $query);
+                //exits to prevent unintended inserts
+                header("Location: index.php");
+                exit;
+            }
+        }
+    ?>
+    </form>
     <div id="viewedit">
         <br><br><br><br><br>
         View and edit transactions
@@ -163,9 +181,9 @@
             $result->free();
         ?>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery-tabledit@1.0.0/jquery.tabledit.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
     <?php
         if($user_data['user_id'] == 0){ //admin table script
             echo "<script src=\"admin_table.js\"></script>";
