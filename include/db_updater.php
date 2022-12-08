@@ -29,6 +29,6 @@
 	    WHERE order_id = '".$input["order_id"]."'";
 	    mysqli_query($connect, $query);   
 	}
-	header('Location: index.php');
+	header('Location: ../src/index.php');
 	echo json_encode($input);
 ?>

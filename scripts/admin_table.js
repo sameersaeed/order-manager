@@ -1,5 +1,5 @@
 $('#adminorders').Tabledit({
-    url: 'db_updater.php',
+    url: '../include/db_updater.php',
     columns: {
         identifier: [2, 'order_id'],
         editable:[[3, 'order_name'], [4, 'order_price'], [5, 'order_quantity'], [6, 'order_date'], [7, 'order_type', '{"Select type": "Select type", "Buying": "Buying", "Selling": "Selling", "Renting": "Renting", "Loaning": "Loaning", "Other": "Other"}'], [8, 'order_status', '{"Select status": "Select status", "In progress": "In progress", "Completed": "Completed", "Cancelled": "Cancelled"}']]

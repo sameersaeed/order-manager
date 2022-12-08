@@ -39,7 +39,7 @@
 							if($user_data['password'] === $password){
 								//login successful, redirect to user's home page
 								$_SESSION['user_id'] = $user_data['user_id'];
-								header("Location: index.php");
+								header("Location: ../src/index.php");
 								die;
 							}
 

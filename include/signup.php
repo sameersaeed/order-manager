@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script>https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"</script>
-	<link rel="stylesheet" href="access_page_styles.css">
+	<script>"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"</script>
+	<link rel="stylesheet" href="../scripts/access_page_styles.css">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sign up</title>

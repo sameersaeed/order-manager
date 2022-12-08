@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include("connection.php");
-    include("functions.php");
+    include("../include/connection.php");
+    include("../include/functions.php");
 
     //gets data of user and order using id
     $user_data = check_id_user($con);
@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="nav">
-        <a href="logout.php">Logout</a>
+        <a href="../include/logout.php">Logout</a>
     </div>
     <br>
     <p1>Hello, <?php echo $user_data['user_name']; ?>.</p1>
@@ -186,10 +186,10 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <?php
         if($user_data['user_id'] == 0){ //admin table script
-            echo "<script src=\"admin_table.js\"></script>";
+            echo "<script src=\"..\"scripts\"sadmin_table.js\"></script>";
         }
         else{ //user table script
-            echo "<script src=\"table.js\"></script>";
+            echo "<script src=\"..\"scripts\"table.js\"></script>";
         }
     ?>
 </body>
