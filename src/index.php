@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="index_styles.css">
+    <link rel="stylesheet" href="../styles/index_styles.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
