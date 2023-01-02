@@ -10,7 +10,6 @@
 	<div id="inner-box">
 		<form method="post">
 			<div id="header">Login</div>
-	
 			<p>Username:</p>
 			<input id="text" type="text" name="user_name" placeholder="Enter username"><br><br>
 			<p>Password:</p>
@@ -37,9 +36,9 @@
 
 							//if password is correct
 							if($user_data['password'] === $password){
-								//login successful, redirect to user's home page
+								//login successful, redirect to user's home/transactions page
 								$_SESSION['user_id'] = $user_data['user_id'];
-								header("Location: ../src/index.php");
+								header("Location: ../src/transactions.php");
 								die;
 							}
 

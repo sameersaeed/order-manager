@@ -19,20 +19,20 @@
 </head>
 <body>
     <div class="nav">
-        <a href="../include/logout.php">Logout</a>
+        <a class="logout" href="../include/logout.php">Logout</a>
     </div>
-    <br>
-    <p1>Hello, <?php echo $user_data['user_name']; ?>.</p1>
-    <br><br><br><br><br>
+    <div class="welcome-container">
+        <h1 class="welcome">Hello, <?php echo $user_data['user_name']; ?>.</h1>
+    </div>
     <form method="post">
         <div class="box-body">
             <p>Create new transaction</p>
             <div class="form-group row" >
                 <input name="order_id" type="hidden" id="id" value="1">
-                    <label class="text-right col-sm-4 col-form-label">Enter Name</label>
-                        <div class="col-sm-8"> 
-                            <input name="order_name" type="text" id="name"  class="form-control">
-                        </div>
+                <label class="text-right col-sm-4 col-form-label">Enter Name</label>
+                <div class="col-sm-8"> 
+                    <input name="order_name" type="text" id="name"  class="form-control">
+                </div>
             </div>
             <div class="form-group row">
                 <label class="text-right col-sm-4 col-form-label">Enter Price</label>
@@ -86,7 +86,7 @@
         //posting order data to db 
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             $user_id = $user_data['user_id'];
-            $order_id = random_num(20);
+            $order_id = rand(0,9999);
             $order_name = $_POST['order_name'];
             $order_price = $_POST['order_price'];
             $order_quantity = $_POST['order_quantity'];
@@ -102,15 +102,14 @@
                     '$order_date', '$order_type', '$order_status')";
                 mysqli_query($con, $query);
                 //exits to prevent unintended inserts
-                header("Location: index.php");
+                header("Location: transactions.php");
                 exit;
             }
         }
     ?>
     </form>
     <div id="viewedit">
-        <br><br><br><br><br>
-        View and edit transactions
+        <h1>View and edit transactions<a href=""></a></h1>
         <?php
             //connecting to db and selecting everything
             $dbhost = "localhost";
@@ -186,10 +185,10 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <?php
         if($user_data['user_id'] == 0){ //admin table script
-            echo "<script src=\"..\"scripts\"sadmin_table.js\"></script>";
+            echo "<script src=../scripts/admin_table.js/></script>";
         }
         else{ //user table script
-            echo "<script src=\"..\"scripts\"table.js\"></script>";
+            echo "<script src=/../scripts/table.js></script>";
         }
     ?>
 </body>

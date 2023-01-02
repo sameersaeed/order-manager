@@ -31,23 +31,6 @@
 			}
 		}
 	}
-
-	//generates random number with a random length
-	function random_num($length){
-			$text = "";
-			//making sure length of random number is never less than 5
-			if($length < 5){
-				$length = 5;
-			}
-			//generates random number between 4 and given value
-			$len = rand(4, $length);
-
-			for($i = 0; $i < $len; $i++){
-				//adds a value between 0 and 9 on each iteration
-				$text .= rand(0,9);
-			}
-			return $text;
-	}
 ?>
 <html>
 <body>
