@@ -4,6 +4,7 @@ $('#orders').Tabledit({
         identifier:[0, 'order_id'],
         editable:[[1, 'order_name'], [2, 'order_price'], [3, 'order_quantity'], [4, 'order_date'], [5, 'order_type', '{"Select type": "Select type", "Buying": "Buying", "Selling": "Selling", "Renting": "Renting", "Loaning": "Loaning", "Other": "Other"}'], [6, 'order_status', '{"Select status": "Select status", "In progress": "In progress", "Completed": "Completed", "Cancelled": "Cancelled"}']]
     },
+
     onDraw: function() {
         $('#orders td:nth-child(5) input').each(function() {
             $(this).datepicker({
@@ -13,6 +14,7 @@ $('#orders').Tabledit({
         });
         console.log('onDraw()');
     },
+
     onSuccess: function(data, textStatus, jqXHR) {
         if(data.action == 'delete'){
             $('#' + data.id).remove();
@@ -24,6 +26,7 @@ $('#orders').Tabledit({
         console.log(jqXHR);
             location.reload();
     },
+
     onFail: function(jqXHR, textStatus, errorThrown) {
         console.log('onFail(jqXHR, textStatus, errorThrown)');
         console.log(jqXHR);
@@ -31,9 +34,11 @@ $('#orders').Tabledit({
         console.log(errorThrown);
             location.reload();
     },
+
     onAlways: function() {
         console.log('onAlways()');
     },
+    
     onAjax: function(action, serialize) {
         console.log('onAjax(action, serialize)');
         console.log(action);

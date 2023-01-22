@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../styles/index_styles.css">
+    <link rel="stylesheet" href="./../styles/index_styles.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="nav">
-        <a class="logout" href="../include/logout.php">Logout</a>
+        <a class="logout" href="./../include/logout.php">Logout</a>
     </div>
     <div class="welcome-container">
         <h1 class="welcome">Hello, <?php echo $user_data['user_name']; ?>.</h1>
@@ -185,10 +185,10 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <?php
         if($user_data['user_id'] == 0){ //admin table script
-            echo "<script src=../scripts/admin_table.js/></script>";
+            echo "<script src=\"./../scripts/admin_table.js\"/></script>";
         }
         else{ //user table script
-            echo "<script src=/../scripts/table.js></script>";
+            echo "<script src=\"./../scripts/table.js\"></script>";
         }
     ?>
 </body>

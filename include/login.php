@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="../styles/access_page_styles.css">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Welcome - log in or sign up</title>
+	<title>Log in</title>
 </head>
 <body>
 	<div id="inner-box">
